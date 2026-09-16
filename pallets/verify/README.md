@@ -16,7 +16,7 @@ Substrate FRAME pallet implementing **Section 8.2 of the Gono Protocol Whitepape
   - `vote_as_verifier(origin, cid, score_binary)`
   - `submit_analyst_review(origin, cid, verdict, stake)`
   - `finalize_content_score(origin, cid)`
-- **Full Documentation**: See [`SANUB_VERIFY_PALLET.md`](../../SANUB_VERIFY_PALLET.md) at workspace root for detailed specifications and AI agent interaction loops.
+- **Full Documentation**: See [`AGENTS.md`](../../AGENTS.md) at workspace root for detailed specifications and AI agent interaction loops.
 
 ## Testing
 ```bash

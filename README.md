@@ -6,7 +6,7 @@
   <img src="https://img.shields.io/badge/Polkadot%20SDK-2606.0.0-E6007A?style=for-the-badge&logo=polkadot" alt="Polkadot SDK"/>
   <img src="https://img.shields.io/badge/Substrate-FRAME%20v48-blue?style=for-the-badge&logo=polkadot" alt="Substrate FRAME"/>
   <img src="https://img.shields.io/badge/Rust-2021-orange?style=for-the-badge&logo=rust" alt="Rust"/>
-  <img src="https://img.shields.io/badge/Tests-81%20Passing-brightgreen?style=for-the-badge" alt="Tests"/>
+  <img src="https://img.shields.io/badge/Tests-85%20Passing-brightgreen?style=for-the-badge" alt="Tests"/>
   <img src="https://img.shields.io/github/actions/workflow/status/Meherajs/gono-protocol-website/ci.yml?branch=main&style=for-the-badge&label=CI" alt="CI Status"/>
   <img src="https://img.shields.io/badge/Next.js-16-black?style=for-the-badge&logo=next.js" alt="Next.js"/>
   <img src="https://img.shields.io/badge/React-19-61dafb?style=for-the-badge&logo=react" alt="React"/>
@@ -21,11 +21,12 @@
 
 Gono Protocol is a modular blockchain infrastructure built on Substrate as a Polkadot Parachain. It provides a universal, content-addressable rail for verifiable media, digital assets, and autonomous AI commerce using a pluggable pallet architecture and a Three-Tier Sovereign Governance model:
 
-- **ERC-7053 Media Receipts & DAG Provenance** (`pallet-gono-store`) — ✅ Complete (11 tests)
+- **ERC-7053 Media Receipts & C2PA Provenance** (`pallet-gono-store`) — ✅ Complete (14 tests)
 - **SANUB Credibility Scoring & Reputation Engine** (`pallet-gono-verify`) — ✅ Complete (13 tests)
 - **HTTP 402 AI-Native Micropayments** (`pallet-gono-x402`) — ✅ Complete (26 tests)
 - **zk-SNARK Anonymous Attestations & Humanity Proofs** (`pallet-gono-privacy`) — ✅ Complete (18 tests)
 - **Kleros Decentralized Arbitration Bridge** (`pallet-kleros-bridge`) — ✅ Complete (7 tests)
+- **Gono C2PA Bridge Service** (`gono-c2pa-bridge`) — ✅ Complete (1 test)
 - **Gono Parachain Runtime** (`gono-runtime`) — ✅ Complete (6 tests, runtime integrity verified)
 
 ---
@@ -76,7 +77,7 @@ gono-protocol/
 ├── GonoProtocol_whitepaper.txt  # Full Protocol Whitepaper
 │
 ├── pallets/                     # ═══ Substrate FRAME Pallets ═══
-│   ├── store/                  # ERC-7053 Media Receipts & CID Provenance ✅ (11 tests)
+│   ├── store/                  # ERC-7053 Media Receipts, DAG & C2PA Metadata ✅ (14 tests)
 │   ├── verify/                 # SANUB Credibility Scoring & Reputation ✅ (13 tests)
 │   ├── x402/                   # HTTP 402 State Channel Micropayments ✅ (26 tests)
 │   ├── privacy/                # zk-SNARK Verifiers & Anonymous Attestations ✅ (18 tests)
@@ -86,6 +87,9 @@ gono-protocol/
 │   ├── runtime/                # Gono Parachain Runtime (`gono-runtime`) ✅ (6 tests)
 │   └── node/                   # Parachain Node Collator CLI
 │
+├── services/                    # ═══ Off-Chain Microservices ═══
+│   └── c2pa-bridge/            # C2PA CLI & Bridge Service (`gono-c2pa`) ✅ (1 test)
+│
 ├── backend/                     # Rust + Actix-web API Service
 └── frontend/                    # Next.js 16 + Tailwind CSS 4 Web App
 ```
@@ -94,21 +98,24 @@ gono-protocol/
 
 ## 🚀 Quick Start & Testing
 
-### Running the Test Suite (81 Total Passing Tests)
+### Running the Test Suite (85 Total Passing Tests)
 
 ```bash
-# Run all 81 unit & integration tests across all workspace crates
+# Run all 85 unit & integration tests across all workspace crates
 $env:SKIP_WASM_BUILD="1"; $env:CARGO_INCREMENTAL="0"; cargo test --workspace --target-dir target-ci
 
 # Check workspace type alignment
 $env:SKIP_WASM_BUILD="1"; $env:CARGO_INCREMENTAL="0"; cargo check --workspace --target-dir target-ci
 ```
 
-### Running Individual Pallet Tests
+### Running Individual Pallet and Service Tests
 
 ```bash
-# Store Pallet (ERC-7053)
+# Store Pallet (ERC-7053 & C2PA Signer Registry)
 cargo test -p pallet-gono-store
+
+# C2PA Bridge CLI & Service
+cargo test -p gono-c2pa-bridge
 
 # Verify Pallet (SANUB)
 cargo test -p pallet-gono-verify
