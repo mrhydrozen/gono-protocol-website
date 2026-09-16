@@ -114,15 +114,16 @@ members = [
     "pallets/privacy",
     "pallets/x402",
     "pallets/kleros-bridge",
+    "services/c2pa-bridge",
 ]
 ```
 
 ### Excluded Members
-- `"chain/node"` — to be updated with collator configuration for `gono-runtime`.
+- `"chain/node"` — Parachain collator CLI (`gono-node`) with `GONO` tokenomics and genesis presets configured in `chain_spec.rs` (in-process relay candidate workers require Linux/WSL2/Docker).
 
 ---
 
-## 5. Pallet & Runtime Implementation Status
+## 5. Pallet, Service & Runtime Implementation Status
 
 | Pallet / Crate | Crate Name | Status | Files | Tests |
 |----------------|-----------|--------|-------|-------|
@@ -133,7 +134,8 @@ members = [
 | **kleros-bridge** | `pallet-kleros-bridge` | ✅ **COMPLETE** | `lib.rs`, `mock.rs`, `tests.rs` | 7 passing |
 | **c2pa-bridge** | `gono-c2pa-bridge` | ✅ **COMPLETE** | `main.rs`, `sign.rs`, `verify.rs`, `ipfs.rs`, `commit.rs`, `tests/` | 1 passing |
 | **runtime** | `gono-runtime` | ✅ **COMPLETE** | `lib.rs`, `configs/mod.rs`, `apis.rs`, `weights/` | 6 passing (incl. runtime integrity) |
-| **Total Test Suite** | — | ✅ **85 PASSING** | — | **85 passing** |
+| **backend** | `gono-backend` | ✅ **COMPLETE** | `main.rs`, `chain.rs`, `x402.rs`, `tests/` | 3 passing |
+| **Total Test Suite** | — | ✅ **88 PASSING** | — | **88 passing (85 workspace + 3 backend)** |
 
 ---
 
@@ -200,6 +202,6 @@ SKIP_WASM_BUILD=1 CARGO_INCREMENTAL=0 cargo check -p gono-runtime --release --lo
 
 ## 8. Next Implementation Priorities
 
-1. **`chain/node`** — Wire collator node CLI with `gono-runtime`
-2. **Backend API Integration** — Connect Actix-web backend with subxt client queries to `gono-runtime`
-3. **Frontend Dashboard** — Connect Web3 interface to live chain state
+1. **Testnet Launch (`Rococo` / Agile Coretime)** — Spin up live collators on testnet using `gono-node` inside Linux container/runner.
+2. **Subxt Generated Client Bindings** — Integrate auto-generated `subxt` runtime metadata codegen into `gono-backend` once the dev node generates blocks.
+3. **Web3 Browser Wallet Adapter** — Connect `@polkadot/extension-dapp` / PAPI in Next.js frontend to allow users to sign extrinsics directly from Talisman, SubWallet, or Polkadot.js.

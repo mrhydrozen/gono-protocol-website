@@ -79,6 +79,42 @@ export interface UseCase {
     pallets_used: string[];
 }
 
+export interface MediaReceiptData {
+    cid: string;
+    author: string;
+    c2pa_manifest_uri?: string;
+    metadata_hash: string;
+    timestamp_block: number;
+    parent_cid?: string | null;
+    revisions: string[];
+    verified: boolean;
+    storage_providers: string[];
+}
+
+export interface SanubCredibilityData {
+    cid: string;
+    credibility_score: number;
+    public_belief: number;
+    news_importance: number;
+    belief_sigmoid: number;
+    reporter_credit: number;
+    verifier_votes_positive: number;
+    verifier_votes_negative: number;
+    analyst_verdict_positive: number;
+    analyst_verdict_negative: number;
+    status: string;
+}
+
+export interface X402Quote {
+    resource_id: string;
+    price_nano_gono: number;
+    recipient: string;
+    channel_id: string;
+    nonce: number;
+    valid_until_block: number;
+    protocol: string;
+}
+
 async function fetchApi<T>(endpoint: string): Promise<T | null> {
     // Skip API calls during build if backend is not available
     if (USE_FALLBACK || typeof window === 'undefined') {
@@ -110,4 +146,9 @@ export const api = {
     getToken: () => fetchApi<TokenInfo>('/api/token'),
     getArchitecture: () => fetchApi<ArchitectureLayer[]>('/api/architecture'),
     getUseCases: () => fetchApi<UseCase[]>('/api/use-cases'),
+    // Gono On-chain & Verification Endpoints
+    getReceipt: (cid: string) => fetchApi<MediaReceiptData>(`/api/receipts/${encodeURIComponent(cid)}`),
+    listReceipts: () => fetchApi<MediaReceiptData[]>('/api/receipts'),
+    getCredibility: (cid: string) => fetchApi<SanubCredibilityData>(`/api/verify/${encodeURIComponent(cid)}`),
+    getX402Quote: (resourceId: string) => fetchApi<X402Quote>('/api/x402/quote'),
 };

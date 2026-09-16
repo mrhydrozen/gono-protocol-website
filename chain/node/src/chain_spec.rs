@@ -26,9 +26,9 @@ impl Extensions {
 }
 
 pub fn development_chain_spec() -> ChainSpec {
-	// Give your base currency a unit name and decimal places
+	// Base Gono currency units and formatting
 	let mut properties = sc_chain_spec::Properties::new();
-	properties.insert("tokenSymbol".into(), "UNIT".into());
+	properties.insert("tokenSymbol".into(), "GONO".into());
 	properties.insert("tokenDecimals".into(), 12.into());
 	properties.insert("ss58Format".into(), 42.into());
 
@@ -38,7 +38,7 @@ pub fn development_chain_spec() -> ChainSpec {
 			relay_chain: RELAY_CHAIN.into(),
 		},
 	)
-	.with_name("Development")
+	.with_name("Gono Development Network")
 	.with_id("dev")
 	.with_chain_type(ChainType::Development)
 	.with_genesis_config_preset_name(sp_genesis_builder::DEV_RUNTIME_PRESET)
@@ -47,9 +47,9 @@ pub fn development_chain_spec() -> ChainSpec {
 }
 
 pub fn local_chain_spec() -> ChainSpec {
-	// Give your base currency a unit name and decimal places
+	// Base Gono currency units and formatting
 	let mut properties = sc_chain_spec::Properties::new();
-	properties.insert("tokenSymbol".into(), "UNIT".into());
+	properties.insert("tokenSymbol".into(), "GONO".into());
 	properties.insert("tokenDecimals".into(), 12.into());
 	properties.insert("ss58Format".into(), 42.into());
 
@@ -59,11 +59,11 @@ pub fn local_chain_spec() -> ChainSpec {
 			relay_chain: RELAY_CHAIN.into(),
 		},
 	)
-	.with_name("Local Testnet")
+	.with_name("Gono Local Testnet")
 	.with_id("local_testnet")
 	.with_chain_type(ChainType::Local)
-	.with_genesis_config_preset_name(sc_chain_spec::LOCAL_TESTNET_RUNTIME_PRESET)
-	.with_protocol_id("template-local")
+	.with_genesis_config_preset_name(sp_genesis_builder::LOCAL_TESTNET_RUNTIME_PRESET)
+	.with_protocol_id("gono-local")
 	.with_properties(properties)
 	.build()
 }

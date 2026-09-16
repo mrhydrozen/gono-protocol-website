@@ -6,7 +6,7 @@
   <img src="https://img.shields.io/badge/Polkadot%20SDK-2606.0.0-E6007A?style=for-the-badge&logo=polkadot" alt="Polkadot SDK"/>
   <img src="https://img.shields.io/badge/Substrate-FRAME%20v48-blue?style=for-the-badge&logo=polkadot" alt="Substrate FRAME"/>
   <img src="https://img.shields.io/badge/Rust-2021-orange?style=for-the-badge&logo=rust" alt="Rust"/>
-  <img src="https://img.shields.io/badge/Tests-85%20Passing-brightgreen?style=for-the-badge" alt="Tests"/>
+  <img src="https://img.shields.io/badge/Tests-88%20Passing-brightgreen?style=for-the-badge" alt="Tests"/>
   <img src="https://img.shields.io/github/actions/workflow/status/Meherajs/gono-protocol-website/ci.yml?branch=main&style=for-the-badge&label=CI" alt="CI Status"/>
   <img src="https://img.shields.io/badge/Next.js-16-black?style=for-the-badge&logo=next.js" alt="Next.js"/>
   <img src="https://img.shields.io/badge/React-19-61dafb?style=for-the-badge&logo=react" alt="React"/>
@@ -28,6 +28,8 @@ Gono Protocol is a modular blockchain infrastructure built on Substrate as a Pol
 - **Kleros Decentralized Arbitration Bridge** (`pallet-kleros-bridge`) — ✅ Complete (7 tests)
 - **Gono C2PA Bridge Service** (`gono-c2pa-bridge`) — ✅ Complete (1 test)
 - **Gono Parachain Runtime** (`gono-runtime`) — ✅ Complete (6 tests, runtime integrity verified)
+- **Gono Backend REST Service** (`gono-backend`) — ✅ Complete (3 tests, live RPC & x402 gateway)
+- **Parachain Collator CLI** (`chain/node`) — ✅ Configured with GONO tokenomics & genesis presets
 
 ---
 
@@ -85,12 +87,12 @@ gono-protocol/
 │
 ├── chain/                       # ═══ Polkadot SDK Parachain ═══
 │   ├── runtime/                # Gono Parachain Runtime (`gono-runtime`) ✅ (6 tests)
-│   └── node/                   # Parachain Node Collator CLI
+│   └── node/                   # Parachain Node Collator CLI (`gono-node`)
 │
 ├── services/                    # ═══ Off-Chain Microservices ═══
 │   └── c2pa-bridge/            # C2PA CLI & Bridge Service (`gono-c2pa`) ✅ (1 test)
 │
-├── backend/                     # Rust + Actix-web API Service
+├── backend/                     # Gono REST API Service (`gono-backend`) ✅ (3 tests)
 └── frontend/                    # Next.js 16 + Tailwind CSS 4 Web App
 ```
 
@@ -98,11 +100,14 @@ gono-protocol/
 
 ## 🚀 Quick Start & Testing
 
-### Running the Test Suite (85 Total Passing Tests)
+### Running the Test Suite (88 Total Passing Tests)
 
 ```bash
 # Run all 85 unit & integration tests across all workspace crates
 $env:SKIP_WASM_BUILD="1"; $env:CARGO_INCREMENTAL="0"; cargo test --workspace --target-dir target-ci
+
+# Run backend API and x402 gateway integration tests (3 passing)
+cargo test --manifest-path backend/Cargo.toml
 
 # Check workspace type alignment
 $env:SKIP_WASM_BUILD="1"; $env:CARGO_INCREMENTAL="0"; cargo check --workspace --target-dir target-ci
@@ -131,6 +136,9 @@ cargo test -p pallet-kleros-bridge
 
 # Runtime Integrity & Genesis Tests
 cargo test -p gono-runtime
+
+# Backend Live RPC & Gateway Tests
+cargo test --manifest-path backend/Cargo.toml
 ```
 
 ---

@@ -1,9 +1,11 @@
+[workspace]
+
 [package]
-name = "numbers_backend"
-version = "1.0.0"
+name = "gono-backend"
+version = "0.1.0"
 edition = "2021"
-description = "Numbers Protocol Backend API - Provenance infrastructure for humans and AI"
-authors = ["Numbers Protocol"]
+description = "Gono Protocol Backend API — Live Provenance, Verification & x402 Micropayments"
+authors = ["Gono Protocol Foundation"]
 
 [dependencies]
 actix-web = "4"
@@ -14,6 +16,9 @@ tokio = { version = "1", features = ["full"] }
 chrono = { version = "0.4", features = ["serde"] }
 env_logger = "0.11"
 log = "0.4"
+reqwest = { version = "0.12", features = ["json"] }
+hex = "0.4"
+sha2 = "0.10"
 
 [profile.release]
 opt-level = 3
